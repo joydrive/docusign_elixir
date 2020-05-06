@@ -136,8 +136,9 @@ defmodule DocuSign.OAuth do
   end
 
   defp token_key do
-    :docusign
-    |> Application.fetch_env!(:private_key)
-    |> File.read!()
+    case Application.fetch_env!(:docusign, :private_key) do
+      'docusign_key.pem' -> File.read!('docusign_key.pem')
+      key -> key
+    end
   end
 end
